@@ -1,8 +1,3 @@
-"""
-A Python implementation of the Viola-Jones ensemble classification method described in 
-Viola, Paul, and Michael Jones. "Rapid object detection using a boosted cascade of simple features." Computer Vision and Pattern Recognition, 2001. CVPR 2001. Proceedings of the 2001 IEEE Computer Society Conference on. Vol. 1. IEEE, 2001.
-Works in both Python2 and Python3
-"""
 import numpy as np
 import math
 import pickle

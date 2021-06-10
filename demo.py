@@ -2,11 +2,16 @@ from __future__ import print_function
 import cv2 as cv
 import argparse
 
+#Nota para ejecutar el codigo se necesitan los archivos
+#haarcascade_eye_tree_eyeglasses.xml y haarcascade_frontalface_alt.xml
+# que se obtienen del repositorio de opencv
+# correr python demo.py -h para ver como ejecutar
+
 def detectAndDisplay(frame):
     frame_gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
     frame_gray = cv.equalizeHist(frame_gray)
 
-    #-- Detect faces
+    #detectamos las caras
     faces = face_cascade.detectMultiScale(frame_gray)
     for (x,y,w,h) in faces:
         center = (x + w//2, y + h//2)
@@ -14,7 +19,7 @@ def detectAndDisplay(frame):
         frame = cv.rectangle(frame,(x,y),(x+w,y+h),(255,255,0),4)
 
         faceROI = frame_gray[y:y+h,x:x+w]
-        #-- In each face, detect eyes
+        #-- para cada cara, detectamos los ojos solo es de prueba
         # eyes = eyes_cascade.detectMultiScale(faceROI)
         # for (x2,y2,w2,h2) in eyes:
         #     eye_center = (x + x2 + w2//2, y + y2 + h2//2)
@@ -35,7 +40,7 @@ eyes_cascade_name = args.eyes_cascade
 face_cascade = cv.CascadeClassifier()
 eyes_cascade = cv.CascadeClassifier()
 
-#-- 1. Load the cascades
+#cargamos los clasificadores
 if not face_cascade.load(cv.samples.findFile(face_cascade_name)):
     print('--(!)Error loading face cascade')
     exit(0)
@@ -44,7 +49,7 @@ if not eyes_cascade.load(cv.samples.findFile(eyes_cascade_name)):
     exit(0)
 
 camera_device = args.camera
-#-- 2. Read the video stream
+# recibimos video de la camara web
 cap = cv.VideoCapture(camera_device)
 if not cap.isOpened:
     print('--(!)Error opening video capture')
@@ -58,5 +63,6 @@ while True:
 
     detectAndDisplay(frame)
 
+    #se cierra la ventana al presionar q
     if cv.waitKey(20) & 0xFF == ord('q'):
         break
